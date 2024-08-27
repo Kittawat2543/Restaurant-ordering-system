@@ -64,9 +64,9 @@ exports.updateTable = async (req, res) => {
 exports.removeTable = async (req, res) => {
     try {
         const id = req.params.id
-        const removedTable = Table.findOneAndDelete({ _id: id }).exec()
+        const removedTable = await Table.findOneAndDelete({ _id: id }).exec()
         
-        res.send(removedTable)
+        res.json(removedTable)
 
     } catch (err) {
         console.error(err.message);

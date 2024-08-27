@@ -2,7 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 const { auth } = require('../middleware/auth')
-const { getTable, createTable, updateTable, removeTable } = require('../controllers/table')
+const { getTable,
+    createTable,
+    updateTable,
+    removeTable
+} = require('../controllers/table')
 
 
 
