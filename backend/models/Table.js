@@ -15,6 +15,6 @@ const TableSchema = new mongoose.Schema({
         enum: ['available', 'occupied'],
         default: 'available'
     }
-}, { timestamps : true})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Table', TableSchema)

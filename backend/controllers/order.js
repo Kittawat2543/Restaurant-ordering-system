@@ -8,19 +8,19 @@ exports.createOrder = async (req, res) => {
 
         const table = await Table.findById(tableId)
         if (!table) {
-            return res.status(404).json({msg: 'Table not found'})
+            return res.status(404).json({ msg: 'Table not found' })
         }
 
         if (table.status === "occupied") {
-            return res.status(400).json({msg: 'Table is currently occupied'})
+            return res.status(400).json({ msg: 'Table is currently occupied' })
         }
 
         let total = 0
-        
+
         for (let item of items) {
             const menuItem = await MenuItem.findById(item.menuItemId)
             if (!menuItem) {
-                res.status(404).json({msg: `menu not found: ${item.menuItemId}`})
+                res.status(404).json({ msg: `menu not found: ${item.menuItemId}` })
             }
             total += menuItem.price * item.quantity
         }
@@ -42,11 +42,11 @@ exports.createOrder = async (req, res) => {
 
         res.json(order)
 
-        
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error')
-        
+
     }
 }
 
@@ -56,11 +56,11 @@ exports.getOrder = async (req, res) => {
             .populate('table', 'tableNumber')
             .populate('items.menuItem', 'name price')
         res.json(orders)
-        
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error')
-        
+
     }
 }
 
@@ -70,7 +70,7 @@ exports.updateOrder = async (req, res) => {
 
         let order = await Order.findById(req.params.id)
         if (!order) {
-            return res.status(404).json({msg: 'Order not found'})
+            return res.status(404).json({ msg: 'Order not found' })
         }
 
         order.status = status || order.status
@@ -83,7 +83,7 @@ exports.updateOrder = async (req, res) => {
             await table.save()
         }
         res.json(order)
-        
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error')
@@ -94,7 +94,7 @@ exports.removeOrder = async (req, res) => {
     try {
         let order = await Order.findById(req.params.id)
         if (!order) {
-            return res.status(404).json({msg: 'Order not found'})
+            return res.status(404).json({ msg: 'Order not found' })
         }
 
         if (order.status !== "paid") {
@@ -104,7 +104,7 @@ exports.removeOrder = async (req, res) => {
         }
 
         await order.remove()
-        res.json({msg: 'Order removed'})
+        res.json({ msg: 'Order removed' })
 
     } catch (err) {
         console.error(err.message);
@@ -117,19 +117,19 @@ exports.bill = async (req, res) => {
         let order = await Order.findById(req.params.id)
             .populate('table', 'tableNumber')
             .populate('items.menuItem', 'name price')
-        
+
         if (!order) {
-            return res.status(404).json({msg: 'Order not found'})
+            return res.status(404).json({ msg: 'Order not found' })
         }
 
         const bill = {
-            orderId : order.id,
+            orderId: order.id,
             tableNumber: order.table.tableNumber,
             items: order.items.map(item => ({
                 name: item.menuItem.name,
                 price: item.menuItem.price,
                 quantity: item.quantity,
-                total:  item.menuItem.price * item.quantity
+                total: item.menuItem.price * item.quantity
             })),
             total: order.total
         }

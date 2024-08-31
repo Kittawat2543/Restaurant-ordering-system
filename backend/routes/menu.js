@@ -8,7 +8,7 @@ const {
 const { auth } = require('../middleware/auth')
 const router = express.Router()
 
-router.get('/menu',auth, getMenu)
+router.get('/menu', auth, getMenu)
 router.post('/menu', auth, createMenu)
 router.put('/menu/:id', auth, updateMenu)
 router.delete('/menu/:id', auth, removeMenu)

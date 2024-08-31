@@ -10,10 +10,10 @@ const { getTable,
 
 
 
-router.get('/table',auth, getTable)
-router.post('/table',auth, createTable )
-router.put('/table/:id',auth, updateTable )
-router.delete('/table/:id',auth, removeTable )
+router.get('/table', auth, getTable)
+router.post('/table', auth, createTable)
+router.put('/table/:id', auth, updateTable)
+router.delete('/table/:id', auth, removeTable)
 
 
 
