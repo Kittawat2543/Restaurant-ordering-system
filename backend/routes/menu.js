@@ -8,10 +8,10 @@ const {
 const { auth } = require('../middleware/auth')
 const router = express.Router()
 
-router.get('/menu', getMenu)
-router.post('/menu',createMenu)
-router.put('/menu/:id',updateMenu)
-router.delete('/menu/:id',removeMenu)
+router.get('/menu',auth, getMenu)
+router.post('/menu', auth, createMenu)
+router.put('/menu/:id', auth, updateMenu)
+router.delete('/menu/:id', auth, removeMenu)
 
 
 
